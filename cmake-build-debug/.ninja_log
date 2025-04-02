@@ -1,0 +1,20 @@
+# ninja log v6
+13	211	7653064844743414	CMakeFiles/Projekt1.dir/TabliceGenerator.cpp.obj	98eadc7ebea4f5aa
+2	326	7653064844632335	CMakeFiles/Projekt1.dir/main.cpp.obj	4bf404b8f277940e
+10	327	7653064844718160	CMakeFiles/Projekt1.dir/TablicaDynamiczna.cpp.obj	c5980c0b2dbfad53
+327	402	7653064847890862	Projekt1.exe	5a547db1de482900
+28	217	7653083274107252	CMakeFiles/Projekt1.dir/TabliceGenerator.cpp.obj	98eadc7ebea4f5aa
+16	342	7653083273984020	CMakeFiles/Projekt1.dir/main.cpp.obj	4bf404b8f277940e
+25	342	7653083274077092	CMakeFiles/Projekt1.dir/TablicaDynamiczna.cpp.obj	c5980c0b2dbfad53
+342	416	7653083277245760	Projekt1.exe	5a547db1de482900
+3	320	7653085533147809	CMakeFiles/Projekt1.dir/main.cpp.obj	4bf404b8f277940e
+320	404	7653085536320052	Projekt1.exe	5a547db1de482900
+13	329	7653089387130323	CMakeFiles/Projekt1.dir/TablicaDynamiczna.cpp.obj	c5980c0b2dbfad53
+330	404	7653089390292740	Projekt1.exe	5a547db1de482900
+12	342	7653090885751764	CMakeFiles/Projekt1.dir/TablicaDynamiczna.cpp.obj	c5980c0b2dbfad53
+343	419	7653090889053965	Projekt1.exe	5a547db1de482900
+14	344	7653094662015787	CMakeFiles/Projekt1.dir/main.cpp.obj	4bf404b8f277940e
+23	345	7653094662111936	CMakeFiles/Projekt1.dir/TablicaDynamiczna.cpp.obj	c5980c0b2dbfad53
+346	424	7653094665335425	Projekt1.exe	5a547db1de482900
+41	428	7653288312140741	CMakeFiles/Projekt1.dir/main.cpp.obj	4bf404b8f277940e
+429	653	7653288316018982	Projekt1.exe	5a547db1de482900
