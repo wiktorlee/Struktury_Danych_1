@@ -4,18 +4,23 @@
 class TablicaDynamiczna {
 private:
     int* tablica;
-    int pojemnosc;
     int rozmiar;
+    int pojemnosc;
 
     void powieksz();
     void zmniejsz();
 
 public:
+    TablicaDynamiczna(int* dane, int rozmiar);
     TablicaDynamiczna(int poczatkowyRozmiar);
     ~TablicaDynamiczna();
 
     void dodajNaKoniec(int wartosc);
+    void dodajNaPoczatek(int wartosc);
+
     void usunZKonca();
+    void usunZPoczatku();
+
     void wyswietl();
 
     int* pobierzTablice();
@@ -23,4 +28,4 @@ public:
     int pobierzRozmiar();
 };
 
-#endif //TABLICADYNAMICZNA_HPP
+#endif
