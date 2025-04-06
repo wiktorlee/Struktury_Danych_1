@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include "TablicaDynamiczna.hpp"
+#include "ListaJednokierunkowa.hpp"
 #include "TabliceGenerator.hpp"
 
 using namespace std;
@@ -10,12 +11,15 @@ int main() {
     int rozmiar_tablicy;
     int wartosc, indeks;
     TablicaDynamiczna* tablicaDynamiczna = nullptr;
+    ListaJednokierunkowa* listaJednokierunkowa = nullptr;
 
     cout << "Podaj rozmiar struktury danych: ";
     cin >> rozmiar_tablicy;
 
     int* dane = TabliceGenerator::generujLosowaTablice(rozmiar_tablicy);
+
     tablicaDynamiczna = new TablicaDynamiczna(dane, rozmiar_tablicy);
+    listaJednokierunkowa = new ListaJednokierunkowa(dane, rozmiar_tablicy);
 
     do {
         cout << "\n==== MENU GLOWNE ====" << endl;
@@ -56,6 +60,7 @@ int main() {
                                     tablicaDynamiczna->dodajNaKoniec(wartosc);
                                     break;
                                 case 3:
+                                    tablicaDynamiczna->dodawanieRandom(wartosc);
                                     break;
                                 default:
                                     cout << "Niepoprawny wybor." << endl;
@@ -79,6 +84,7 @@ int main() {
                                     tablicaDynamiczna->usunZKonca();
                                     break;
                                 case 3:
+                                    tablicaDynamiczna->usuwanieRandom();
                                     break;
                                 default:
                                     cout << "Niepoprawny wybor." << endl;
@@ -103,7 +109,52 @@ int main() {
                 break;
 
             case 2:
-                cout << "\n--- Lista jednokierunkowa ---" << endl;
+                do {
+                    cout << "\nOpcje dla listy jednokierunkowej:" << endl;
+                    cout << "1. Dodaj" << endl;
+                    cout << "2. Usun" << endl;
+                    cout << "3. Wyswietl" << endl;
+                    cout << "4. Cofnij" << endl;
+                    cout << "Wybierz opcje: ";
+                    cin >> wybor_tablica;
+
+                    switch (wybor_tablica) {
+                        case 1:
+                            cout << "\nWybierz miejsce dodania:" << endl;
+                            cout << "1. Na koncu" << endl;
+                            cout << "Wybierz opcje: ";
+                            cin >> wybor_operacja;
+
+                            cout << "Podaj wartosc: ";
+                            cin >> wartosc;
+
+                            switch (wybor_operacja) {
+                                case 1:
+                                    listaJednokierunkowa->dodajKoniec(wartosc);
+                                    break;
+                                default:
+                                    cout << "Niepoprawny wybor." << endl;
+                            }
+                            listaJednokierunkowa->wyswietl();
+                            break;
+
+                        case 2:
+                            break;
+
+                        case 3:
+                            listaJednokierunkowa->wyswietl();
+                            break;
+
+                        case 4:
+                            cout << "Powrot do glownego menu." << endl;
+                            break;
+
+                        default:
+                            cout << "Niepoprawny wybor." << endl;
+                            break;
+                    }
+
+                } while (wybor_tablica != 4);
                 break;
 
             case 0:
@@ -117,9 +168,8 @@ int main() {
 
     } while (wybor_glowny != 0);
 
-    if (tablicaDynamiczna != nullptr) {
-        delete tablicaDynamiczna;
-    }
+    if (tablicaDynamiczna != nullptr) delete tablicaDynamiczna;
+    if (listaJednokierunkowa != nullptr) delete listaJednokierunkowa;
     delete[] dane;
 
     return 0;

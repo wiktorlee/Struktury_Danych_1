@@ -9,6 +9,7 @@ TablicaDynamiczna::TablicaDynamiczna(int* dane, int rozmiar) {
     for (int i = 0; i < rozmiar; i++) {
         tablica[i] = dane[i];
     }
+    cout<<"Tablica wypelniona danymi"<<endl;
 }
 
 TablicaDynamiczna::TablicaDynamiczna(int poczatkowyRozmiar) {
@@ -62,6 +63,24 @@ void TablicaDynamiczna::dodajNaPoczatek(int wartosc) {
     rozmiar++;
 }
 
+void TablicaDynamiczna::dodawanieRandom(int wartosc) {
+    if (rozmiar == pojemnosc) {
+        powieksz();
+    }
+    srand(time(nullptr));
+    int indeks = rand() % (rozmiar + 1);
+
+    for (int i = rozmiar; i > indeks; i--) {
+        tablica[i] = tablica[i - 1];
+    }
+    tablica[indeks] = wartosc;
+    rozmiar++;
+    cout << "Dodano element " << wartosc << " na pozycji " << indeks << endl;
+}
+
+
+
+
 void TablicaDynamiczna::usunZKonca() {
     if (rozmiar > 0) {
         rozmiar--;
@@ -79,9 +98,25 @@ void TablicaDynamiczna::usunZPoczatku() {
     }
 }
 
+void TablicaDynamiczna::usuwanieRandom() {
+    if (rozmiar == 0) {
+        cout << "Tablica pusta!" << endl;
+        return;
+    }
+    int indeks = rand() % rozmiar;
+
+    for (int i = indeks; i < rozmiar - 1; i++) {
+        tablica[i] = tablica[i + 1];
+    }
+    rozmiar--;
+    zmniejsz();
+    cout << "Usunieto element z pozycji " << indeks << endl;
+}
+
+
 void TablicaDynamiczna::wyswietl() {
     if (rozmiar == 0) {
-        cout << "Tablica jest pusta." << endl;
+        cout << "Tablica pusta!!." << endl;
         return;
     }
     cout << "Zawartosc tablicy (" << rozmiar << "/" << pojemnosc << "): [";
@@ -93,6 +128,9 @@ void TablicaDynamiczna::wyswietl() {
     }
     cout << "]" << endl;
 }
+
+
+
 
 int* TablicaDynamiczna::pobierzTablice() {
     return tablica;
