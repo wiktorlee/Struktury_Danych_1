@@ -1,3 +1,4 @@
+#include<iostream>
 #include "TabliceGenerator.hpp"
 #include <cstdlib>
 #include <ctime>

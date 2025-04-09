@@ -1,176 +1,66 @@
 #include <iostream>
-#include <cstdlib>
-#include "TablicaDynamiczna.hpp"
-#include "ListaJednokierunkowa.hpp"
-#include "TabliceGenerator.hpp"
+#include "Badanie.hpp"
 
 using namespace std;
 
 int main() {
-    int wybor_glowny, wybor_tablica, wybor_operacja;
-    int rozmiar_tablicy;
-    int wartosc, indeks;
-    TablicaDynamiczna* tablicaDynamiczna = nullptr;
-    ListaJednokierunkowa* listaJednokierunkowa = nullptr;
+    int rozmiarStruktury;
+    int liczbaEgzemplarzy;
+    int liczbaOperacji;
+    int liczbaElementow;
 
-    cout << "Podaj rozmiar struktury danych: ";
-    cin >> rozmiar_tablicy;
+    cout << "BADANIE" << endl;
+    cout << "Podaj rozmiar struktury: ";
+    cin >> rozmiarStruktury;
 
-    int* dane = TabliceGenerator::generujLosowaTablice(rozmiar_tablicy);
+    cout << "Podaj liczbe badanych egzemplarzy: ";
+    cin >> liczbaEgzemplarzy;
 
-    tablicaDynamiczna = new TablicaDynamiczna(dane, rozmiar_tablicy);
-    listaJednokierunkowa = new ListaJednokierunkowa(dane, rozmiar_tablicy);
+    cout << "Podaj liczbe operacji do wykonania ( na jednym egzemplarzu): ";
+    cin >> liczbaOperacji;
 
-    do {
-        cout << "\n==== MENU GLOWNE ====" << endl;
-        cout << "1. Tablica dynamiczna" << endl;
-        cout << "2. Lista jednokierunkowa" << endl;
-        cout << "0. Zamknij program" << endl;
-        cout << "Wybierz opcje: ";
-        cin >> wybor_glowny;
+    cout << "Podaj liczbe elementow w jednej operacji: ";
+    cin >> liczbaElementow;
 
-        switch (wybor_glowny) {
-            case 1:
-                do {
-                    cout << "\nOpcje dla tablicy dynamicznej:" << endl;
-                    cout << "1. Dodaj" << endl;
-                    cout << "2. Usun" << endl;
-                    cout << "3. Wyswietl" << endl;
-                    cout << "4. Cofnij" << endl;
-                    cout << "Wybierz opcje: ";
-                    cin >> wybor_tablica;
+    cout << "\n WYBIERZ OPERACJE:" << endl;
+    cout << "1. Dodawanie na poczatek" << endl;
+    cout << "2. Dodawanie na koniec" << endl;
+    cout << "3. Usuwanie z poczatku" << endl;
+    cout << "4. Usuwanie z konca" << endl;
+    cout << "5. Dodawanie na losowej pozycji" << endl;
+    cout << "6. Usuwanie z losowej pozycji" << endl;
+    cout<<"7. Wyszukiwanie elementu"<<endl;
 
-                    switch (wybor_tablica) {
-                        case 1:
-                            cout << "\nWybierz miejsce dodania:" << endl;
-                            cout << "1. Na poczatku" << endl;
-                            cout << "2. Na koncu" << endl;
-                            cout << "3. W losowym miejscu" << endl;
-                            cout << "Wybierz opcje: ";
-                            cin >> wybor_operacja;
+    int wybor;
+    cin >> wybor;
 
-                            cout << "Podaj wartosc: ";
-                            cin >> wartosc;
+    switch (wybor) {
+        case 1:
+            Badanie::BadanieDodawaniePoczatek(rozmiarStruktury, liczbaEgzemplarzy, liczbaOperacji, liczbaElementow);
+        break;
+        case 2:
+            Badanie::BadanieDodawanieKoniec(rozmiarStruktury, liczbaEgzemplarzy, liczbaOperacji, liczbaElementow);
+        break;
+        case 3:
+            Badanie::BadanieUsuwaniePoczatek(rozmiarStruktury, liczbaEgzemplarzy, liczbaOperacji, liczbaElementow);
+        break;
+        case 4:
+            Badanie::BadanieUsuwanieKoniec(rozmiarStruktury, liczbaEgzemplarzy, liczbaOperacji, liczbaElementow);
+        break;
 
-                            switch (wybor_operacja) {
-                                case 1:
-                                    tablicaDynamiczna->dodajNaPoczatek(wartosc);
-                                    break;
-                                case 2:
-                                    tablicaDynamiczna->dodajNaKoniec(wartosc);
-                                    break;
-                                case 3:
-                                    tablicaDynamiczna->dodawanieRandom(wartosc);
-                                    break;
-                                default:
-                                    cout << "Niepoprawny wybor." << endl;
-                            }
-                            tablicaDynamiczna->wyswietl();
-                            break;
-
-                        case 2:
-                            cout << "\nWybierz miejsce usuniecia:" << endl;
-                            cout << "1. Z poczatku" << endl;
-                            cout << "2. Z konca" << endl;
-                            cout << "3. Z losowego miejsca" << endl;
-                            cout << "Wybierz opcje: ";
-                            cin >> wybor_operacja;
-
-                            switch (wybor_operacja) {
-                                case 1:
-                                    tablicaDynamiczna->usunZPoczatku();
-                                    break;
-                                case 2:
-                                    tablicaDynamiczna->usunZKonca();
-                                    break;
-                                case 3:
-                                    tablicaDynamiczna->usuwanieRandom();
-                                    break;
-                                default:
-                                    cout << "Niepoprawny wybor." << endl;
-                            }
-                            tablicaDynamiczna->wyswietl();
-                            break;
-
-                        case 3:
-                            tablicaDynamiczna->wyswietl();
-                            break;
-
-                        case 4:
-                            cout << "Powrot do glownego menu." << endl;
-                            break;
-
-                        default:
-                            cout << "Niepoprawny wybor." << endl;
-                            break;
-                    }
-
-                } while (wybor_tablica != 4);
-                break;
-
-            case 2:
-                do {
-                    cout << "\nOpcje dla listy jednokierunkowej:" << endl;
-                    cout << "1. Dodaj" << endl;
-                    cout << "2. Usun" << endl;
-                    cout << "3. Wyswietl" << endl;
-                    cout << "4. Cofnij" << endl;
-                    cout << "Wybierz opcje: ";
-                    cin >> wybor_tablica;
-
-                    switch (wybor_tablica) {
-                        case 1:
-                            cout << "\nWybierz miejsce dodania:" << endl;
-                            cout << "1. Na koncu" << endl;
-                            cout << "Wybierz opcje: ";
-                            cin >> wybor_operacja;
-
-                            cout << "Podaj wartosc: ";
-                            cin >> wartosc;
-
-                            switch (wybor_operacja) {
-                                case 1:
-                                    listaJednokierunkowa->dodajKoniec(wartosc);
-                                    break;
-                                default:
-                                    cout << "Niepoprawny wybor." << endl;
-                            }
-                            listaJednokierunkowa->wyswietl();
-                            break;
-
-                        case 2:
-                            break;
-
-                        case 3:
-                            listaJednokierunkowa->wyswietl();
-                            break;
-
-                        case 4:
-                            cout << "Powrot do glownego menu." << endl;
-                            break;
-
-                        default:
-                            cout << "Niepoprawny wybor." << endl;
-                            break;
-                    }
-
-                } while (wybor_tablica != 4);
-                break;
-
-            case 0:
-                cout << "Zamykanie programu..." << endl;
-                break;
-
-            default:
-                cout << "Niepoprawny wybor." << endl;
-                break;
-        }
-
-    } while (wybor_glowny != 0);
-
-    if (tablicaDynamiczna != nullptr) delete tablicaDynamiczna;
-    if (listaJednokierunkowa != nullptr) delete listaJednokierunkowa;
-    delete[] dane;
+        case 5:
+            Badanie::BadanieDodawanieRandom(rozmiarStruktury, liczbaEgzemplarzy, liczbaOperacji, liczbaElementow);
+        break;
+        case 6:
+            Badanie::BadanieUsuwanieRandom(rozmiarStruktury, liczbaEgzemplarzy, liczbaOperacji, liczbaElementow);
+        break;
+        case 7:
+            Badanie::BadanieSearch(rozmiarStruktury, liczbaEgzemplarzy, liczbaOperacji);
+        break;
+        default:
+            cout << "Zly wybor" << endl;
+        break;
+    }
 
     return 0;
 }

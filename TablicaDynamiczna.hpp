@@ -20,6 +20,7 @@ public:
     void usunZPoczatku();
     void usuwanieRandom();
     void wyswietl();
+    bool zawiera(int wartosc);
     int* pobierzTablice();
     int pobierzPojemnosc();
     int pobierzRozmiar();

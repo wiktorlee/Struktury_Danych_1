@@ -1,5 +1,5 @@
-#include "TablicaDynamiczna.hpp"
 #include <iostream>
+#include "TablicaDynamiczna.hpp"
 using namespace std;
 
 TablicaDynamiczna::TablicaDynamiczna(int* dane, int rozmiar) {
@@ -50,6 +50,7 @@ void TablicaDynamiczna::dodajNaKoniec(int wartosc) {
     }
     tablica[rozmiar] = wartosc;
     rozmiar++;
+    //cout<<"Wykonano operacje"<<endl;
 }
 
 void TablicaDynamiczna::dodajNaPoczatek(int wartosc) {
@@ -61,6 +62,7 @@ void TablicaDynamiczna::dodajNaPoczatek(int wartosc) {
     }
     tablica[0] = wartosc;
     rozmiar++;
+    //cout<<"Wykonano operacje"<<endl;
 }
 
 void TablicaDynamiczna::dodawanieRandom(int wartosc) {
@@ -75,7 +77,7 @@ void TablicaDynamiczna::dodawanieRandom(int wartosc) {
     }
     tablica[indeks] = wartosc;
     rozmiar++;
-    cout << "Dodano element " << wartosc << " na pozycji " << indeks << endl;
+    //cout<<"Wykonano operacje"<<endl;
 }
 
 
@@ -86,6 +88,7 @@ void TablicaDynamiczna::usunZKonca() {
         rozmiar--;
         zmniejsz();
     }
+    //cout<<"Wykonano operacje"<<endl;
 }
 
 void TablicaDynamiczna::usunZPoczatku() {
@@ -96,6 +99,7 @@ void TablicaDynamiczna::usunZPoczatku() {
         rozmiar--;
         zmniejsz();
     }
+    //cout<<"Wykonano operacje"<<endl;
 }
 
 void TablicaDynamiczna::usuwanieRandom() {
@@ -110,7 +114,7 @@ void TablicaDynamiczna::usuwanieRandom() {
     }
     rozmiar--;
     zmniejsz();
-    cout << "Usunieto element z pozycji " << indeks << endl;
+    //cout<<"Wykonano operacje"<<endl;
 }
 
 
@@ -129,6 +133,14 @@ void TablicaDynamiczna::wyswietl() {
     cout << "]" << endl;
 }
 
+bool TablicaDynamiczna::zawiera(int wartosc) {
+    for (int i = 0; i < rozmiar; i++) {
+        if (tablica[i] == wartosc) {
+            return true;
+        }
+    }
+    return false;
+}
 
 
 

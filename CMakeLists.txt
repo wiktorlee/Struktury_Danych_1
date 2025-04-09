@@ -9,4 +9,6 @@ add_executable(Projekt1
         TablicaDynamiczna.cpp
         TabliceGenerator.cpp
         ListaJednokierunkowa.cpp
+        Badanie.cpp
+        Badanie.hpp
 )
