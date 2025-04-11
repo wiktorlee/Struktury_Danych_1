@@ -81,6 +81,14 @@ build CMakeFiles/Projekt1.dir/ListaJednokierunkowa.cpp.obj: CXX_COMPILER__Projek
   TARGET_COMPILE_PDB = CMakeFiles\Projekt1.dir\
   TARGET_PDB = Projekt1.pdb
 
+build CMakeFiles/Projekt1.dir/DoublyLinkedList.cpp.obj: CXX_COMPILER__Projekt1_unscanned_Debug C$:/Users/pc/Desktop/studia/SEM$ 4/Struktury$ danych/Projekt1/DoublyLinkedList.cpp || cmake_object_order_depends_target_Projekt1
+  DEP_FILE = CMakeFiles\Projekt1.dir\DoublyLinkedList.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Projekt1.dir
+  OBJECT_FILE_DIR = CMakeFiles\Projekt1.dir
+  TARGET_COMPILE_PDB = CMakeFiles\Projekt1.dir\
+  TARGET_PDB = Projekt1.pdb
+
 build CMakeFiles/Projekt1.dir/Badanie.cpp.obj: CXX_COMPILER__Projekt1_unscanned_Debug C$:/Users/pc/Desktop/studia/SEM$ 4/Struktury$ danych/Projekt1/Badanie.cpp || cmake_object_order_depends_target_Projekt1
   DEP_FILE = CMakeFiles\Projekt1.dir\Badanie.cpp.obj.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
@@ -97,7 +105,7 @@ build CMakeFiles/Projekt1.dir/Badanie.cpp.obj: CXX_COMPILER__Projekt1_unscanned_
 #############################################
 # Link the executable Projekt1.exe
 
-build Projekt1.exe: CXX_EXECUTABLE_LINKER__Projekt1_Debug CMakeFiles/Projekt1.dir/main.cpp.obj CMakeFiles/Projekt1.dir/TablicaDynamiczna.cpp.obj CMakeFiles/Projekt1.dir/TabliceGenerator.cpp.obj CMakeFiles/Projekt1.dir/ListaJednokierunkowa.cpp.obj CMakeFiles/Projekt1.dir/Badanie.cpp.obj
+build Projekt1.exe: CXX_EXECUTABLE_LINKER__Projekt1_Debug CMakeFiles/Projekt1.dir/main.cpp.obj CMakeFiles/Projekt1.dir/TablicaDynamiczna.cpp.obj CMakeFiles/Projekt1.dir/TabliceGenerator.cpp.obj CMakeFiles/Projekt1.dir/ListaJednokierunkowa.cpp.obj CMakeFiles/Projekt1.dir/DoublyLinkedList.cpp.obj CMakeFiles/Projekt1.dir/Badanie.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Projekt1.dir
