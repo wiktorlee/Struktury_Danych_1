@@ -1,8 +1,10 @@
 #include "DoublyLinkedList.h"
 #include <iostream>
 
+
 Node::Node(int value)
     : data(value), prev(nullptr), next(nullptr) {}
+
 
 // Konstruktor
 DoublyLinkedList::DoublyLinkedList()
@@ -10,14 +12,14 @@ DoublyLinkedList::DoublyLinkedList()
     std::cout << "Utworzono liste dwukierunkowa." << std::endl;
 }
 
-// Tworzenie listy na podstawie tablicy
+
+// Towrzenie listy na podstawie tablicy
 DoublyLinkedList::DoublyLinkedList(int* data, int size)
     : head(nullptr), tail(nullptr), size(0) {
     if(size <= 0) return;
     for(int i = 0; i < size; i++) {
         append(data[i]);
     }
-    std::cout<<"Lista 2 wypelniona danymi"<<std::endl;
 }
 
 // Destruktor
@@ -27,18 +29,15 @@ DoublyLinkedList::~DoublyLinkedList() {
         head = head->next;
         delete temp;
     }
-    tail = nullptr;
-    size = 0;
 }
-
+/** @brief Dodawanie elementów
+*/
 // Dodawanie na początek listy
 void DoublyLinkedList::prepend(int value) {
     Node* newNode = new Node(value);
     newNode->next = head;
     if(head != nullptr) {
         head->prev = newNode;
-    } else {
-        tail = newNode; // Gdy lista była pusta
     }
     head = newNode;
     size++;
@@ -51,13 +50,11 @@ void DoublyLinkedList::append(int value) {
         tail->next = newNode;
         newNode->prev = tail;
         tail = newNode;
-    } else {
-        head = tail = newNode; // Gdy lista była pusta
     }
     size++;
 }
 
-// Dodawanie na losową pozycję
+// Dodawanie na losową pozycje
 void DoublyLinkedList::insertRandom(int value) {
     int index = rand() % (size + 1);
     if(index == 0) {
@@ -79,17 +76,15 @@ void DoublyLinkedList::insertRandom(int value) {
     current->prev = newNode;
     size++;
 }
-
+/**
+ *@brief usuwanie elementów
+ */
 // Usuwa element na początku listy
 void DoublyLinkedList::removeHead() {
-    if (head == nullptr) return;
-
     Node* temp = head;
     head = head->next;
     if(head != nullptr) {
         head->prev = nullptr;
-    } else {
-        tail = nullptr; // Gdy lista staje się pusta
     }
     delete temp;
     size--;
@@ -97,25 +92,19 @@ void DoublyLinkedList::removeHead() {
 
 // Usuwa element na końcu listy
 void DoublyLinkedList::removeTail() {
-    if (tail == nullptr) return;
-
     Node* temp = tail;
     tail = tail->prev;
     if(tail != nullptr) {
         tail->next = nullptr;
-    } else {
-        head = nullptr; // Gdy lista staje się pusta
     }
     delete temp;
     size--;
 }
 
 // Usuwa element losowy
+
 void DoublyLinkedList::removeRandom() {
-    if (size == 0) return;
-
     int index = rand() % size;
-
     if(index == 0) {
         removeHead();
         return;
@@ -124,19 +113,16 @@ void DoublyLinkedList::removeRandom() {
         removeTail();
         return;
     }
-
     Node* current = head;
     for(int i = 0; i < index; i++) {
         current = current->next;
     }
-
-    if(current == nullptr || current->prev == nullptr || current->next == nullptr) return;
-
     current->prev->next = current->next;
     current->next->prev = current->prev;
     delete current;
     size--;
 }
+
 
 // Sprawdza, czy lista zawiera element o zadanej wartości
 bool DoublyLinkedList::contains(int value) const {
@@ -150,7 +136,9 @@ bool DoublyLinkedList::contains(int value) const {
     return false;
 }
 
+
 // Wyszukuje element w liście i zwraca jego indeks
+
 int DoublyLinkedList::search(int value) const {
     Node* current = head;
     int index = 0;
@@ -163,3 +151,6 @@ int DoublyLinkedList::search(int value) const {
     }
     return -1;
 }
+
+
+
