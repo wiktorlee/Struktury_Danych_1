@@ -1,195 +1,170 @@
 #include <iostream>
 #include "ListaJednokierunkowa.hpp"
 #include <cstdlib>
-
 using namespace std;
 
-/**
- * @brief Konstruktor domyślny listy jednokierunkowej.
- * Tworzy pustą listę – wskaźniki head i tail ustawione na nullptr.
- */
 ListaJednokierunkowa::ListaJednokierunkowa() : head(nullptr), tail(nullptr), rozmiar(0) {
-    cout << "Utworzono pusta liste " << endl; // komunikat
+    cout << "Utworzono pusta liste " << endl;
 }
 
-/**
- * @brief Konstruktor tworzący listę z przekazanej tablicy.
- * @param dane Tablica z danymi.
- * @param rozmiar Liczba elementów do dodania.
- */
 ListaJednokierunkowa::ListaJednokierunkowa(int* dane, int rozmiar) : head(nullptr), tail(nullptr), rozmiar(0) {
-    if (rozmiar == 0) return; // jeśli brak danych, zakończ
+    if (rozmiar == 0) return;
+
     for (int i = 0; i < rozmiar; i++) {
-        dodajKoniec(dane[i]); // dodaj każdy element na koniec
+        dodajKoniec(dane[i]);
     }
     cout << "Lista wypelniona danymi." << endl;
 }
 
-/**
- * @brief Dodaje element na koniec listy.
- * @param wartosc Wartość do dodania.
- */
 void ListaJednokierunkowa::dodajKoniec(int wartosc) {
-    Wezel* newWezel = new Wezel(wartosc); // tworzymy nowy węzeł
-    if (head == nullptr) {                // jeśli lista jest pusta
-        head = tail = newWezel;           // ustaw nowy węzeł jako pierwszy i ostatni
-    } else {
-        tail->next = newWezel;            // poprzedni ostatni węzeł wskazuje na nowy
-        tail = newWezel;                  // nowy węzeł staje się ostatnim
-    }
-    rozmiar++; // zwiększamy licznik elementów
-}
-
-/**
- * @brief Dodaje element na początek listy.
- * @param wartosc Wartość do dodania.
- */
-void ListaJednokierunkowa::dodajPoczatek(int wartosc) {
     Wezel* newWezel = new Wezel(wartosc);
-    newWezel->next = head;   // nowy węzeł wskazuje na obecny początek
-    head = newWezel;         // ustawiamy nowy węzeł jako początek
-    if (tail == nullptr) {   // jeśli lista była pusta
+
+    if (head == nullptr) {
+        head = tail = newWezel;
+    } else {
+        tail->next = newWezel;
         tail = newWezel;
     }
     rozmiar++;
 }
 
-/**
- * @brief Dodaje element w losowej pozycji listy.
- * @param wartosc Wartość do dodania.
- */
+void ListaJednokierunkowa::dodajPoczatek(int wartosc) {
+    Wezel* newWezel = new Wezel(wartosc);
+    newWezel->next = head;
+    head = newWezel;
+
+    if (tail == nullptr) {
+        tail = newWezel;
+    }
+    rozmiar++;
+   // cout <<"Wykonano operacje" << endl;
+}
+
 void ListaJednokierunkowa::dodajRandom(int wartosc) {
-    int indeks = rand() % (rozmiar + 1); // losuj indeks
+    int indeks = rand() % (rozmiar + 1);
+
     if (indeks == 0) {
-        dodajPoczatek(wartosc);         // jeśli 0, dodaj na początek
+        dodajPoczatek(wartosc);
         return;
     }
     if (indeks == rozmiar) {
-        dodajKoniec(wartosc);           // jeśli na końcu, dodaj na koniec
+        dodajKoniec(wartosc);
         return;
     }
+
     Wezel* newWezel = new Wezel(wartosc);
     Wezel* aktualny = head;
-    for (int i = 1; i < indeks; i++) {   // przechodzimy do pozycji
+
+    for (int i = 1; i < indeks; i++) {
         aktualny = aktualny->next;
     }
-    newWezel->next = aktualny->next;       // wstawiamy nowy węzeł
+    newWezel->next = aktualny->next;
     aktualny->next = newWezel;
     rozmiar++;
+
+    //cout<<"Wykonano operacje" << endl;
 }
 
-/**
- * @brief Usuwa pierwszy element listy.
- */
 void ListaJednokierunkowa::usunPoczatek() {
     if (head == nullptr) {
-        cout << "Lista jest pusta!" << endl; // komunikat
+        cout << "Lista jest pusta!" << endl;
         return;
     }
-    Wezel* temp = head;        // zapamiętujemy pierwszy
-    head = head->next;         // przesuwamy head
-    delete temp;               // usuwamy poprzedni head
-    if (head == nullptr) {     // jeśli lista teraz pusta
+
+    Wezel* temp = head;
+    head = head->next;
+    delete temp;
+
+    if (head == nullptr) {
         tail = nullptr;
     }
-    rozmiar--; // zmniejszamy licznik
+    rozmiar--;
+    //cout <<"Wykonano operacje" << endl;
 }
 
-/**
- * @brief Usuwa ostatni element listy.
- */
 void ListaJednokierunkowa::usunKoniec() {
     if (head == nullptr) {
         cout << "Lista jest pusta!" << endl;
         return;
     }
-    if (head == tail) {      // gdy tylko jeden element
+
+    if (head == tail) {
         delete head;
         head = tail = nullptr;
     } else {
         Wezel* aktualny = head;
-        while (aktualny->next != tail) { // szukamy elementu przed ostatnim
+        while (aktualny->next != tail) {
             aktualny = aktualny->next;
         }
-        delete tail;         // usuwamy ostatni
-        tail = aktualny;     // ustawiamy nowy ostatni
+        delete tail;
+        tail = aktualny;
         tail->next = nullptr;
     }
     rozmiar--;
+     //cout <<"Wykonano operacje" << endl;
 }
 
-/**
- * @brief Usuwa element z losowej pozycji.
- */
+
+
 void ListaJednokierunkowa::usunRandom() {
     if (rozmiar == 0) {
         cout << "Lista jest pusta!" << endl;
         return;
     }
-    int indeks = rand() % rozmiar; // losujemy indeks
+
+    int indeks = rand() % rozmiar;
+
     if (indeks == 0) {
-        usunPoczatek();         // jeśli pierwszy, usuń pierwszy
+        usunPoczatek();
         return;
     }
     if (indeks == rozmiar - 1) {
-        usunKoniec();           // jeśli ostatni, usuń ostatni
+        usunKoniec();
         return;
     }
     Wezel* aktualny = head;
-    for (int i = 1; i < indeks; i++) {  // przechodzimy do elementu przed usuwanym
+
+    for (int i = 1; i < indeks; i++) {
         aktualny = aktualny->next;
     }
     Wezel* doUsuniecia = aktualny->next;
-    aktualny->next = doUsuniecia->next;  // pomijamy usuwany element
-    delete doUsuniecia;                  // usuwamy element
+    aktualny->next = doUsuniecia->next;
+    delete doUsuniecia;
     rozmiar--;
+
+     //cout <<"Wykonano operacje" << endl;
 }
 
-/**
- * @brief Destruktor listy – usuwa wszystkie elementy.
- */
 ListaJednokierunkowa::~ListaJednokierunkowa() {
-    while (head != nullptr) {            // dopóki lista nie pusta
+    while (head != nullptr) {
         Wezel* temp = head;
         head = head->next;
         delete temp;
     }
 }
 
-/**
- * @brief Wyświetla zawartość listy.
- */
 void ListaJednokierunkowa::wyswietl() const {
     if (head == nullptr) {
         cout << "Lista jest pusta!" << endl;
         return;
     }
+
     Wezel* aktualny = head;
     cout << "Lista: ";
-    while (aktualny != nullptr) {         // wypisujemy każdy element
+    while (aktualny != nullptr) {
         cout << aktualny->dane << " ";
         aktualny = aktualny->next;
     }
     cout << endl;
 }
 
-/**
- * @brief Zwraca liczbę elementów w liście.
- * @return Rozmiar listy.
- */
 int ListaJednokierunkowa::pobierzRozmiar() const {
     return rozmiar;
 }
-
-/**
- * @brief Sprawdza, czy lista zawiera daną wartość.
- * @param wartosc Wartość do sprawdzenia.
- * @return true, jeśli wartość jest w liście, false w przeciwnym razie.
- */
 bool ListaJednokierunkowa::zawiera(int wartosc) const {
     Wezel* aktualny = head;
     while (aktualny != nullptr) {
-        if (aktualny->dane == wartosc) { // znajdź wartość
+        if (aktualny->dane == wartosc) {
             return true;
         }
         aktualny = aktualny->next;
