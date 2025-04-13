@@ -8,6 +8,16 @@
 
 using namespace std;
 using namespace std::chrono;
+//metoda odpowiedzialna za przeprowadzenie badan czasowych wskazanej operacji dla trzech struktur danych:
+//tablicy dynamicznej, listy jednokierunkowej oraz listy dwukierunkowej
+//działa zgodnie z ustalonym harmonogramem badan: wykonuje badania dla zadanej liczby egzemplarzy,
+//z których kazdy posiada wylosowane dane poczatkowe oraz zestaw danych do operacji
+//dla kazdego egzemplarza wykonuje zadana liczbe operacji,
+//a kazda operacja polega na wykonaniu działania (np. dodania lub usuniecia) na zadanej liczbie elementów
+//czas wykonania kazdej pojedynczej operacji (np. jednego dodania) jest mierzony osobno
+//na podstawie tych pomiarów liczona jest srednia czastkowa, a nastepnie ogolna srednia globalna z calego badania
+//finalnie, dla kazdej struktury wypisywany jest usredniony czas wykonania danej operacji w nanosekundach
+//KAŻDA Z METOD ZBUDOWANA JEST WEDLE TEGO SAMEGO SZABLONU
 
 /**
  * @brief Testuje operację dodawania na początek dla dynamicznej tablicy, listy jednokierunkowej i listy dwukierunkowej.

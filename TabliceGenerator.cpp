@@ -13,7 +13,7 @@ int* TabliceGenerator::generujLosowaTablice(int rozmiar) {
 
     for(int i = 0; i < rozmiar; i++)
         tab[i] = i;
-
+                                                //zapelniamy strukture liczbami od 0 do rozmiar, a nastepnie shuffle'ujemy fisher-yates'em
 
     fisherYatesShuffle(tab, rozmiar);
 

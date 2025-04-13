@@ -19,7 +19,7 @@ ListaJednokierunkowa::ListaJednokierunkowa(int* dane, int rozmiar) : head(nullpt
 void ListaJednokierunkowa::dodajKoniec(int wartosc) {
     Wezel* newWezel = new Wezel(wartosc);
 
-    if (head == nullptr) {
+    if (head == nullptr) {                      //dodanie elementu na koniec, aktualizacja tail'a i rozmiaru
         head = tail = newWezel;
     } else {
         tail->next = newWezel;
@@ -28,7 +28,7 @@ void ListaJednokierunkowa::dodajKoniec(int wartosc) {
     rozmiar++;
 }
 
-void ListaJednokierunkowa::dodajPoczatek(int wartosc) {
+void ListaJednokierunkowa::dodajPoczatek(int wartosc) {         //dodanie elementu na poczatek, aktualizacja head'a
     Wezel* newWezel = new Wezel(wartosc);
     newWezel->next = head;
     head = newWezel;
@@ -43,7 +43,7 @@ void ListaJednokierunkowa::dodajPoczatek(int wartosc) {
 void ListaJednokierunkowa::dodajRandom(int wartosc) {
     int indeks = rand() % (rozmiar + 1);
 
-    if (indeks == 0) {
+    if (indeks == 0) {                  //losowanie ziarna, sprawdzenie czy nie dodajemy na poczatku lub koncu, dodanie w wybrane miejsce
         dodajPoczatek(wartosc);
         return;
     }
@@ -66,7 +66,7 @@ void ListaJednokierunkowa::dodajRandom(int wartosc) {
 }
 
 void ListaJednokierunkowa::usunPoczatek() {
-    if (head == nullptr) {
+    if (head == nullptr) {                      //usuniecie elementu z poczatku, aktualizacja head
         cout << "Lista jest pusta!" << endl;
         return;
     }
@@ -82,7 +82,7 @@ void ListaJednokierunkowa::usunPoczatek() {
     //cout <<"Wykonano operacje" << endl;
 }
 
-void ListaJednokierunkowa::usunKoniec() {
+void ListaJednokierunkowa::usunKoniec() {       //usuniecie z ostatniego elementu listy, znalezienie przedostatniego wezla
     if (head == nullptr) {
         cout << "Lista jest pusta!" << endl;
         return;
@@ -106,7 +106,7 @@ void ListaJednokierunkowa::usunKoniec() {
 
 
 
-void ListaJednokierunkowa::usunRandom() {
+void ListaJednokierunkowa::usunRandom() {       //losowanie ziarna, sprawdzenie czy nie usuwamy z poczatku lub z konca, usuniecie w wybranym miejscu
     if (rozmiar == 0) {
         cout << "Lista jest pusta!" << endl;
         return;
@@ -162,7 +162,7 @@ int ListaJednokierunkowa::pobierzRozmiar() const {
     return rozmiar;
 }
 bool ListaJednokierunkowa::zawiera(int wartosc) const {
-    Wezel* aktualny = head;
+    Wezel* aktualny = head;                                 //przechodzenie po wskazniku next i szukanie zadanej wartosci
     while (aktualny != nullptr) {
         if (aktualny->dane == wartosc) {
             return true;
