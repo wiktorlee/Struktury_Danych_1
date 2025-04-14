@@ -8,24 +8,20 @@
 
 using namespace std;
 using namespace std::chrono;
-//metoda odpowiedzialna za przeprowadzenie badan czasowych wskazanej operacji dla trzech struktur danych:
-//tablicy dynamicznej, listy jednokierunkowej oraz listy dwukierunkowej
-//działa zgodnie z ustalonym harmonogramem badan: wykonuje badania dla zadanej liczby egzemplarzy,
-//z których kazdy posiada wylosowane dane poczatkowe oraz zestaw danych do operacji
-//dla kazdego egzemplarza wykonuje zadana liczbe operacji,
-//a kazda operacja polega na wykonaniu działania (np. dodania lub usuniecia) na zadanej liczbie elementów
-//czas wykonania kazdej pojedynczej operacji (np. jednego dodania) jest mierzony osobno
-//na podstawie tych pomiarów liczona jest srednia czastkowa, a nastepnie ogolna srednia globalna z calego badania
-//finalnie, dla kazdej struktury wypisywany jest usredniony czas wykonania danej operacji w nanosekundach
-//KAŻDA Z METOD ZBUDOWANA JEST WEDLE TEGO SAMEGO SZABLONU
+// Metoda odpowiedzialna za przeprowadzenie badań czasowych dla wskazanej operacji na trzech strukturach danych:
+//  tablicy dynamicznej, liście jednokierunkowej oraz liście dwukierunkowej.
+// Działa zgodnie z ustalonym harmonogramem badań: wykonuje testy dla zadanej liczby egzemplarzy,
+// z których każdy otrzymuje losowo wygenerowane dane początkowe oraz zestaw danych do operacji.
+// Dla każdej instancji wykonywana jest określona liczba operacji,
+// z których każda polega na wykonaniu działania (np. dodania lub usunięcia) na ustalonej liczbie elementów.
+// Czas trwania każdej pojedynczej operacji (np. jednego dodania/usunięcia elementu) jest mierzony osobno.
+// Po zakończeniu wszystkich pomiarów obliczana jest uśredniona wartość globalna,
+// będąca ilorazem sumy wszystkich pomiarów i całkowitej liczby operacji.
+// Finalnie, dla każdej ze struktur wypisywany jest średni czas wykonania danej operacji w nanosekundach.
+// Każda z metod badawczych zbudowana jest według tego samego schematu.
 
-/**
- * @brief Testuje operację dodawania na początek dla dynamicznej tablicy, listy jednokierunkowej i listy dwukierunkowej.
- * @param rozmiar Początkowy rozmiar struktur.
- * @param liczbaEgzemplarzy Liczba instancji do testu.
- * @param liczbaOperacji Liczba operacji wykonywanych na jednej instancji.
- * @param liczbaElementow Liczba elementów dodawanych w jednej operacji.
- */
+
+
 void Badanie::BadanieDodawaniePoczatek(int rozmiar, int liczbaEgzemplarzy, int liczbaOperacji, int liczbaElementow) {
     long long sumaTablica = 0, sumaLista = 0, sumaDwukierunkowa = 0;
 
@@ -69,13 +65,7 @@ void Badanie::BadanieDodawaniePoczatek(int rozmiar, int liczbaEgzemplarzy, int l
     cout << "Sredni czas dodawania na poczatek - Lista dwukierunkowa: " << (sumaDwukierunkowa / liczbaPomiarow) << " ns" << endl;
 }
 
-/**
- * @brief Testuje dodawanie na koniec dla wszystkich struktur.
- * @param rozmiar Początkowy rozmiar struktur.
- * @param liczbaEgzemplarzy Liczba instancji.
- * @param liczbaOperacji Liczba operacji na instancji.
- * @param liczbaElementow Liczba elementów dodawanych przy jednej operacji.
- */
+
 void Badanie::BadanieDodawanieKoniec(int rozmiar, int liczbaEgzemplarzy, int liczbaOperacji, int liczbaElementow) {
     long long sumaTablica = 0, sumaLista = 0, sumaDwukierunkowa = 0;
 
@@ -116,13 +106,51 @@ void Badanie::BadanieDodawanieKoniec(int rozmiar, int liczbaEgzemplarzy, int lic
     cout << "Sredni czas dodawania na koniec - Lista dwukierunkowa: " << (sumaDwukierunkowa / liczbaPomiarow) << " ns" << endl;
 }
 
-/**
- * @brief Testuje operację usuwania elementów z początku.
- * @param rozmiar Początkowy rozmiar struktur.
- * @param liczbaEgzemplarzy Liczba instancji do testu.
- * @param liczbaOperacji Liczba operacji na jednej instancji.
- * @param liczbaElementow Liczba elementów usuwanych przy jednej operacji.
- */
+
+void Badanie::BadanieDodawanieRandom(int rozmiar, int liczbaEgzemplarzy, int liczbaOperacji, int liczbaElementow) {
+    long long sumaTablica = 0, sumaLista = 0, sumaLista2 = 0;
+
+    for (int x = 0; x < liczbaEgzemplarzy; x++) {              // test dla każdej instancji
+        cout << "Badanie numer: " << x + 1 << endl;
+
+        int* danePoczatkowe = TabliceGenerator::generujLosowaTablice(rozmiar);                  // dane startowe
+        int* daneOperacja = TabliceGenerator::generujLosowaTablice(liczbaElementow);            // elementy do dodania
+
+        TablicaDynamiczna tablica(danePoczatkowe, rozmiar);
+        ListaJednokierunkowa lista(danePoczatkowe, rozmiar);
+        DoublyLinkedList lista2(danePoczatkowe, rozmiar);
+
+        // Dodawanie elementów w losowych miejscach
+        for (int y = 0; y < liczbaOperacji; y++) {
+            for (int i = 0; i < liczbaElementow; i++) {
+                auto start = high_resolution_clock::now();
+                tablica.dodawanieRandom(daneOperacja[i]);   // dodaj do tablicy
+                auto end = high_resolution_clock::now();
+                sumaTablica += duration_cast<nanoseconds>(end - start).count();
+
+                start = high_resolution_clock::now();
+                lista.dodajRandom(daneOperacja[i]);         // dodaj do listy jednokierunkowej
+                end = high_resolution_clock::now();
+                sumaLista += duration_cast<nanoseconds>(end - start).count();
+
+                start = high_resolution_clock::now();
+                lista2.insertRandom(daneOperacja[i]);       // dodaj do listy dwukierunkowej
+                end = high_resolution_clock::now();
+                sumaLista2 += duration_cast<nanoseconds>(end - start).count();
+            }
+        }
+
+        delete[] danePoczatkowe;
+        delete[] daneOperacja;
+    }
+
+    long long liczbaPomiarow = static_cast<long long>(liczbaEgzemplarzy) * liczbaOperacji * liczbaElementow;  // łaczna liczba operacji
+    cout << "Sredni czas dodawania losowo - Tablica: " << (sumaTablica / liczbaPomiarow) << " ns" << endl;
+    cout << "Sredni czas dodawania losowo - Lista jednokierunkowa: " << (sumaLista / liczbaPomiarow) << " ns" << endl;
+    cout << "Sredni czas dodawania losowo - Lista dwukierunkowa: " << (sumaLista2 / liczbaPomiarow) << " ns" << endl;
+}
+
+
 void Badanie::BadanieUsuwaniePoczatek(int rozmiar, int liczbaEgzemplarzy, int liczbaOperacji, int liczbaElementow) {
     long long sumaTablica = 0, sumaLista = 0, sumaLista2 = 0;
 
@@ -162,13 +190,7 @@ void Badanie::BadanieUsuwaniePoczatek(int rozmiar, int liczbaEgzemplarzy, int li
     cout << "Sredni czas usuwania z poczatku - Lista dwukierunkowa: " << (sumaLista2 / liczbaPomiarow) << " ns" << endl;
 }
 
-/**
- * @brief Testuje usuwanie elementów z końca.
- * @param rozmiar Początkowy rozmiar struktur.
- * @param liczbaEgzemplarzy Liczba instancji do testu.
- * @param liczbaOperacji Liczba operacji dla jednej instancji.
- * @param liczbaElementow Liczba elementów usuwanych przy jednej operacji.
- */
+
 void Badanie::BadanieUsuwanieKoniec(int rozmiar, int liczbaEgzemplarzy, int liczbaOperacji, int liczbaElementow) {
     long long sumaTablica = 0, sumaLista = 0, sumaLista2 = 0;
 
@@ -207,12 +229,49 @@ void Badanie::BadanieUsuwanieKoniec(int rozmiar, int liczbaEgzemplarzy, int licz
     cout << "Sredni czas usuwania z konca - Lista dwukierunkowa: " << (sumaLista2 / liczbaPomiarow) << " ns" << endl;
 }
 
-/**
- * @brief Testuje operację wyszukiwania elementu.
- * @param rozmiar Rozmiar struktury.
- * @param liczbaEgzemplarzy Liczba instancji testowych.
- * @param liczbaOperacji Liczba operacji wyszukiwania.
- */
+void Badanie::BadanieUsuwanieRandom(int rozmiar, int liczbaEgzemplarzy, int liczbaOperacji, int liczbaElementow) {
+    long long sumaTablica = 0, sumaLista = 0, sumaLista2 = 0;
+
+    for (int x = 0; x < liczbaEgzemplarzy; x++) {              // test dla każdej instancji
+        cout << "Badanie numer: " << x + 1 << endl;
+
+        int* danePoczatkowe = TabliceGenerator::generujLosowaTablice(rozmiar + liczbaOperacji * liczbaElementow); // dane początkowe
+
+        TablicaDynamiczna tablica(danePoczatkowe, rozmiar + liczbaOperacji * liczbaElementow);
+        ListaJednokierunkowa lista(danePoczatkowe, rozmiar + liczbaOperacji * liczbaElementow);
+        DoublyLinkedList lista2(danePoczatkowe, rozmiar + liczbaOperacji * liczbaElementow);
+
+
+        for (int y = 0; y < liczbaOperacji; y++) {      // Usuwanie elementów z losowych miejsc
+            for (int i = 0; i < liczbaElementow; i++) {
+                auto start = high_resolution_clock::now();
+                tablica.usuwanieRandom();      // usuń z tablicy
+                auto end = high_resolution_clock::now();
+                sumaTablica += duration_cast<nanoseconds>(end - start).count();
+
+                start = high_resolution_clock::now();
+                lista.usunRandom();            // usuń z listy jednokierunkowej
+                end = high_resolution_clock::now();
+                sumaLista += duration_cast<nanoseconds>(end - start).count();
+
+                start = high_resolution_clock::now();
+                lista2.removeRandom();         // usuń z listy dwukierunkowej
+                end = high_resolution_clock::now();
+                sumaLista2 += duration_cast<nanoseconds>(end - start).count();
+            }
+        }
+
+        delete[] danePoczatkowe;
+    }
+
+    long long liczbaPomiarow = static_cast<long long>(liczbaEgzemplarzy) * liczbaOperacji * liczbaElementow;
+    cout << "Sredni czas usuwania losowo - Tablica: " << (sumaTablica / liczbaPomiarow) << " ns" << endl;
+    cout << "Sredni czas usuwania losowo - Lista jednokierunkowa: " << (sumaLista / liczbaPomiarow) << " ns" << endl;
+    cout << "Sredni czas usuwania losowo - Lista dwukierunkowa: " << (sumaLista2 / liczbaPomiarow) << " ns" << endl;
+}
+
+
+
 void Badanie::BadanieSearch(int rozmiar, int liczbaEgzemplarzy, int liczbaOperacji) {
     long long sumaTablica = 0, sumaLista = 0, sumaLista2 = 0;
 
